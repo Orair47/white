@@ -3,12 +3,12 @@
 
 	name = "Power Cable"
 
-	ConnectableTypes = list( /obj/machinery/power, /obj/structure/grille )
+	ConnectableTypes = list( /obj/machinery/power, /obj/grille )
 	NetworkControllerType = /datum/UnifiedNetworkController/PowernetController
-	DropCablePieceType = /obj/item/weapon/cable_coil/power
+	DropCablePieceType = /obj/item/weapon/CableCoil/power
 	EquivalentCableType = /obj/cabling/power
 
-/obj/item/weapon/cable_coil/power
+/obj/item/weapon/CableCoil/power
 	icon_state = "redcoil3"
 	CoilColour = "red"
 	BaseName  = "Electrical"

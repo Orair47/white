@@ -11,7 +11,7 @@ mob/var/next_pain_time = 0
 // partname is the name of a body part
 // amount is a num from 1 to 100
 mob/proc/pain(var/partname, var/amount, var/force)
-	if(stat != CONSCIOUS) return
+	if(stat != STAT_ALIVE) return
 	if(world.time < next_pain_time && !force)
 		return
 	if(amount > 10 && istype(src,/mob/living/carbon/human))
@@ -37,7 +37,7 @@ mob/proc/pain(var/partname, var/amount, var/force)
 
 mob/living/carbon/proc/handle_pain()
 	// not when sleeping
-	if(stat != CONSCIOUS) return
+	if(stat != STAT_ALIVE) return
 	if(istype(src,/mob/living/carbon/human))
 		var/maxdam = 0
 		var/datum/organ/external/damaged_organ = null

@@ -13,13 +13,6 @@
 		if(src.check_access(null))
 			if(density)
 				open()
-	if(istype(AM, /obj/mecha))
-		var/obj/mecha/mecha = AM
-		if(density)
-			if(mecha.occupant && src.allowed(mecha.occupant))
-				open()
-		return
-
 // beepDERP
 /obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group) return 0
@@ -165,7 +158,7 @@
 			else
 				src.forceopen()
 				src.operating = -1
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 				s.set_up(2, 1, src)
 				s.start()
 				flick("door_spark", src)
@@ -174,7 +167,7 @@
 			if(prob(50))
 				src.forceopen()
 				src.operating = -1
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 				s.set_up(2, 1, src)
 				s.start()
 				flick("door_spark", src)

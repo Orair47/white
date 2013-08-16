@@ -59,7 +59,7 @@
 	var/obj/buildholder/master = null
 	var/varholder = "name"
 	var/valueholder = "dongs"
-	var/objholder = "/obj/structure/closet"
+	var/objholder = "/obj/closet"
 /obj/buildquit
 	density = 1
 	anchored = 1
@@ -152,13 +152,13 @@
 			if(1)
 				return
 			if(2)
-				objholder = input(usr,"Enter typepath:" ,"Typepath","/obj/structure/closet")
+				objholder = input(usr,"Enter typepath:" ,"Typepath","/obj/closet")
 				var/list/removed_paths = list("/obj/bhole")
 				if(objholder in removed_paths)
 					alert("That path is not allowed.")
-					objholder = "/obj/structure/closet"
+					objholder = "/obj/closet"
 				else if (dd_hasprefix(objholder, "/mob") && !(usr.client.holder.rank in list("Host", "Coder", "Super Administrator")))
-					objholder = "/obj/structure/closet"
+					objholder = "/obj/closet"
 			if(3)
 				var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "cuffed", "ka", "last_eaten", "urine")
 
@@ -263,15 +263,15 @@
 			else if(istype(object,/turf) && pa.Find("ctrl") && pa.Find("left"))
 				switch(holder.builddir.dir)
 					if(NORTH)
-						new/obj/structure/window/reinforced/north(get_turf(object))
+						new/obj/window/reinforced/north(get_turf(object))
 					if(EAST)
-						new/obj/structure/window/reinforced/east(get_turf(object))
+						new/obj/window/reinforced/east(get_turf(object))
 					if(SOUTH)
-						new/obj/structure/window/reinforced/south(get_turf(object))
+						new/obj/window/reinforced/south(get_turf(object))
 					if(WEST)
-						new/obj/structure/window/reinforced/west(get_turf(object))
+						new/obj/window/reinforced/west(get_turf(object))
 					if(NORTHWEST)
-						new/obj/structure/window/reinforced/northwest(get_turf(object))
+						new/obj/window/reinforced/northwest(get_turf(object))
 		if(2)
 			if(pa.Find("left"))
 				var/obj/A = new holder.buildmode.objholder (get_turf(object))

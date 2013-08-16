@@ -13,7 +13,7 @@
 			return
 		else if (health < 0)
 			oxyloss++
-	update_icon()
+	updateicon()
 
 	//stage = 0
 	if (client)

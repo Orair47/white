@@ -164,9 +164,9 @@ obj/item/proc
 		if(l_hand == C || r_hand == C) continue
 		if(C.body_parts_covered & HEAD)
 			head_exposure *= C.heat_transfer_coefficient
-		if(C.body_parts_covered & CHEST)
+		if(C.body_parts_covered & UPPER_TORSO)
 			chest_exposure *= C.heat_transfer_coefficient
-		if(C.body_parts_covered & GROIN)
+		if(C.body_parts_covered & LOWER_TORSO)
 			groin_exposure *= C.heat_transfer_coefficient
 		if(C.body_parts_covered & LEGS)
 			legs_exposure *= C.heat_transfer_coefficient

@@ -1,4 +1,4 @@
-/obj/structure/closet/gmcloset/New()
+/obj/closet/gmcloset/New()
 	..()
 	sleep(2)
 	new /obj/item/clothing/head/that(src)

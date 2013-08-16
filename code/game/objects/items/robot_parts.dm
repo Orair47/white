@@ -1,3 +1,14 @@
+/obj/item/weapon/optical_unit
+	name = "optical sensor unit"
+	icon = 'items.dmi'
+	icon_state = "optical_unit"
+	item_state = "electronic"
+	throwforce = 5
+	w_class = 1.0
+	throw_speed = 4
+	throw_range = 10
+	flags = FPRINT | TABLEPASS| CONDUCT
+
 /obj/item/robot_parts
 	name = "robot parts"
 	icon = 'robot_parts.dmi'
@@ -30,8 +41,8 @@
 /obj/item/robot_parts/head
 	name = "robot head"
 	icon_state = "head"
-	var/obj/item/device/flash/opt1 = null
-	var/obj/item/device/flash/opt2 = null
+	var/obj/item/weapon/optical_unit/opt1 = null
+	var/obj/item/weapon/optical_unit/opt2 = null
 
 /obj/item/robot_parts/robot_suit
 	name = "robot suit"
@@ -46,9 +57,9 @@
 
 /obj/item/robot_parts/robot_suit/New()
 	..()
-	src.update_icon()
+	src.updateicon()
 
-/obj/item/robot_parts/robot_suit/proc/update_icon()
+/obj/item/robot_parts/robot_suit/proc/updateicon()
 	src.overlays = null
 	if(src.l_arm)
 		src.overlays += "l_arm+o"
@@ -78,7 +89,7 @@
 		user.drop_item()
 		W.loc = src
 		src.l_leg = W
-		src.update_icon()
+		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/r_leg))
 		if(src.r_leg)
@@ -86,7 +97,7 @@
 		user.drop_item()
 		W.loc = src
 		src.r_leg = W
-		src.update_icon()
+		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/l_arm))
 		if(src.l_arm)
@@ -94,7 +105,7 @@
 		user.drop_item()
 		W.loc = src
 		src.l_arm = W
-		src.update_icon()
+		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/r_arm))
 		if(src.r_arm)
@@ -102,7 +113,7 @@
 		user.drop_item()
 		W.loc = src
 		src.r_arm = W
-		src.update_icon()
+		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/chest))
 		if(src.chest)
@@ -111,7 +122,7 @@
 			user.drop_item()
 			W.loc = src
 			src.chest = W
-			src.update_icon()
+			src.updateicon()
 		else if(!W:wires)
 			user << "\blue You need to attach wires to it first!"
 		else
@@ -124,9 +135,9 @@
 			user.drop_item()
 			W.loc = src
 			src.head = W
-			src.update_icon()
+			src.updateicon()
 		else
-			user << "\blue You need to attach an flash to it first!"
+			user << "\blue You need to attach an optical sensor to it first!"
 
 	if(istype(W, /obj/item/brain))
 		if(src.check_completion())
@@ -213,8 +224,8 @@
 			W.loc = src
 			src.cell = W
 			user << "\blue You insert the cell!"
-	if(istype(W, /obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/coil = W
+	if(istype(W, /obj/item/weapon/CableCoil))
+		var/obj/item/weapon/CableCoil/coil = W
 		if(src.wires)
 			user << "\blue You have already inserted wire!"
 			return
@@ -222,20 +233,25 @@
 			if (coil.CableType != /obj/cabling/power)
 				user << "This is the wrong cable type, you need electrical cable!"
 				return
-			coil.use(1)
+			coil.UseCable(1)
 			src.wires = 1.0
 			user << "\blue You insert the wire!"
 	return
 
 /obj/item/robot_parts/head/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/device/flash))
+	if(istype(W, /obj/item/weapon/optical_unit))
 		if(src.opt1 && src.opt2)
 			user << "\blue You have already inserted the eyes!"
 			return
-		user << "\blue You insert the flash into the eye socket!"
-		user.drop_item()
-		W.loc = src
-		if(src.opt1) src.opt2 = W
-		else 		 src.opt1 = W
+		else if(src.opt1)
+			user.drop_item()
+			W.loc = src
+			src.opt2 = W
+			user << "\blue You insert the optical sensor into the eye socket!"
+		else
+			user.drop_item()
+			W.loc = src
+			src.opt1 = W
+			user << "\blue You insert the optical sensor into the eye socket!"
 	return
 

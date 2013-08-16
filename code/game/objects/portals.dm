@@ -1,4 +1,4 @@
-/obj/effect/portal
+/obj/portal
 	name = "portal"
 	icon = 'stationobjs.dmi'
 	icon_state = "portal"
@@ -8,31 +8,31 @@
 	var/creator = null
 	anchored = 1.0
 
-/obj/effect/portal/New()
+/obj/portal/New()
 	spawn(300)
 		del(src)
 		return
 	return
 
-/obj/effect/portal/attack_hand(mob/M as mob)
+/obj/portal/attack_hand(mob/M as mob)
 	spawn(0)
 		src.teleport(M)
 		return
 	return
 
-/obj/effect/portal/Bumped(mob/M as mob|obj)
+/obj/portal/Bumped(mob/M as mob|obj)
 	spawn(0)
 		src.teleport(M)
 		return
 	return
 
-/obj/effect/portal/HasEntered(AM as mob|obj)
+/obj/portal/HasEntered(AM as mob|obj)
 	spawn(0)
 		src.teleport(AM)
 		return
 	return
 
-/obj/effect/portal/proc/teleport(atom/movable/M as mob|obj)
+/obj/portal/proc/teleport(atom/movable/M as mob|obj)
 	if(istype(M, /obj/effects)) //sparks don't teleport
 		return
 	if (M.anchored)

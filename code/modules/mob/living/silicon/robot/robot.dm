@@ -35,7 +35,7 @@
 	spawn (1)
 		unlock_medal("Slave to the Overmind", 0, "You are a pawn of the AI", "easy")
 		src << "\blue Your icons have been generated!"
-		update_icon()
+		updateicon()
 		if(real_name == "Cyborg")
 			real_name += " [pick(rand(1, 999))]"
 			name = real_name
@@ -59,61 +59,38 @@
 			module = new /obj/item/weapon/robot_module/standard(src)
 			module_icon.icon_state = "standard"
 			class = "standard"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standart", "New")
-			switch(icontype)
-				if("Standart")		icon_state = "standartrobot"
-				else				icon_state = "robot"
+			icon_state = "[class]robot"
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
 			module_icon.icon_state = "medical"
 			class = "medical"
+			icon_state = "[class]robot"
 			del(radio)
 			radio = new /obj/item/device/radio/headset/headset_med(src)
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standart", "New")
-			switch(icontype)
-				if("Standart")		icon_state = "medicalrobot"
-				else				icon_state = "surgeon"
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
 			module_icon.icon_state = "security"
 			class = "security"
+			icon_state = "[class]robot"
 			del(radio)
 			radio = new /obj/item/device/radio/headset/headset_sec(src)
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standart", "Shitcuriton", "Bloodhound v1", "Bloodhound v2")
-			switch(icontype)
-				if("Standart")		icon_state = "securityrobot"
-				if("Shitcuriton")	icon_state = "secborg"
-				if("Bloodhound v1")	icon_state = "security"
-				if("Bloodhound v2")	icon_state = "bloodhound"
-				else				icon_state = "borg" //EASTER EGG
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			module_icon.icon_state = "engineer"
 			class = "engineer"
+			icon_state = "[class]robot"
 			del(radio)
 			radio = new /obj/item/device/radio/headset/headset_eng(src)
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standart", "Engibot", "Landmate")
-			switch(icontype)
-				if("Standart")		icon_state = "engineering"
-				if("Engibot")		icon_state = "engineerrobot"
-				else				icon_state = "landmate"
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
 			module_icon.icon_state = "janitor"
 			class = "janitor"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standart", "New")
-			switch(icontype)
-				if("Standart")		icon_state = "janitorrobot"
-				else				icon_state = "mopgearrex"
+			icon_state = "[class]robot"
 		if("Brobot")
 			module = new /obj/item/weapon/robot_module/brobot(src)
 			module_icon.icon_state = "brobot"
 			class = "standard"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standart", "B.R.O.", "Maximillion")
-			switch(icontype)
-				if("Standart")		icon_state = "service"
-				if("B.R.O.")		icon_state = "brobot"
-				else				icon_state = "maximillion"
+			icon_state = "[class]robot"
 
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"
@@ -364,28 +341,28 @@
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red [user] has fixed some of the dents on [src]!"), 1)
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && wiresexposed)
-		var/obj/item/weapon/cable_coil/coil = W
+	else if(istype(W, /obj/item/weapon/CableCoil) && wiresexposed)
+		var/obj/item/weapon/CableCoil/coil = W
 		if (coil.CableType != /obj/cabling/power)
 			user << "This is the wrong cable type, you need electrical cable!"
 			return
 		fireloss -= 30
 		if(fireloss < 0) fireloss = 0
 		updatehealth()
-		coil.use(1)
+		coil.UseCable(1)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red [user] has fixed some of the burnt wires on [src]!"), 1)
 
 	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(opened)
 			opened = 0
-			update_icon()
+			updateicon()
 		else
 			if(locked)
 				user << "The cover is locked and cannot be opened."
 			else
 				opened = 1
-				update_icon()
+				updateicon()
 
 	else if (istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
 		if(wiresexposed)
@@ -398,12 +375,12 @@
 			cell = W
 			user << "You insert the power cell."
 //			chargecount = 0
-		update_icon()
+		updateicon()
 
 	else if	(istype(W, /obj/item/weapon/screwdriver) && opened)	// haxing
 		wiresexposed = !wiresexposed
 		user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
-		update_icon()
+		updateicon()
 
 	else if (istype(W, /obj/item/weapon/card/id))			// trying to unlock the interface with an ID card
 		if(emagged)
@@ -416,7 +393,7 @@
 			if(allowed(usr))
 				locked = !locked
 				user << "You [ locked ? "lock" : "unlock"] [src]'s interface."
-				update_icon()
+				updateicon()
 			else
 				user << "\red Access denied."
 
@@ -431,7 +408,7 @@
 				emagged = 1
 				locked = 0
 				user << "You emag [src]'s interface."
-				update_icon()
+				updateicon()
 			else
 				user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
 	else if(istype(W,/obj/item/weapon/rcd_ammo))
@@ -465,11 +442,11 @@
 				user.r_hand = cell
 
 			cell.add_fingerprint(user)
-			cell.update_icon()
+			cell.updateicon()
 
 			cell = null
 			user << "You remove the power cell."
-			update_icon()
+			updateicon()
 
 
 /mob/living/silicon/robot/proc/allowed(mob/M)
@@ -502,21 +479,53 @@
 			return 0
 	return 1
 
-/mob/living/silicon/robot/proc/update_icon()
-	overlays.Cut()
+/mob/living/silicon/robot/proc/updateicon()
+
+	overlays = null
+
+	if(emagged)
+		overlays += "emag"
+
 	if(stat == 0)
-		overlays += "eyes-[icon_state]"
-	else
-		overlays -= "eyes-[icon_state]"
+		overlays += "eyes"
 
 	if(opened)
-		if(wiresexposed)
-			overlays += "ov-openpanel +w"
-		else if(cell)
-			overlays += "ov-openpanel +c"
-		else
-			overlays += "ov-openpanel -c"
-	return
+		if(bruteloss > 150)
+			overlays += "d3+o"
+		else if(bruteloss > 100)
+			overlays += "d2+o"
+		else if(bruteloss > 50)
+			overlays += "d1+o"
+		if(fireloss > 150)
+			overlays += "b3+o"
+		else if(fireloss > 100)
+			overlays += "b2+o"
+		else if(fireloss > 50)
+			overlays += "b1+o"
+	else
+		if(bruteloss > 150)
+			overlays += "d3"
+		else if(bruteloss > 100)
+			overlays += "d2"
+		else if(bruteloss > 50)
+			overlays += "d1"
+		if(fireloss > 150)
+			overlays += "b3"
+		else if(fireloss > 100)
+			overlays += "b2"
+		else if(fireloss > 50)
+			overlays += "b1"
+
+	if(wiresexposed)
+		icon_state = "[class]robot+we"
+		return
+
+	else if(opened)
+		icon_state = "[ cell ? "[class]robot+o+c" : "[class]robot+o-c" ]"		// if opened, show cell if it's inserted
+		return
+
+	else
+		icon_state = "[class]robot"
 
 /mob/living/silicon/robot/verb/cmd_installed_modules()
 	set category = "Robot Commands"
@@ -599,7 +608,7 @@
 		else
 			locked = text2num(href_list["locked"])
 			src << "You [ locked ? "lock" : "unlock"] your interface."
-			update_icon()
+			updateicon()
 		panel_menu()
 
 	if (href_list["opened"])
@@ -608,7 +617,7 @@
 		else
 			opened = text2num(href_list["opened"])
 			src << "You [ opened ? "open" : "close" ] your access panel."
-			update_icon()
+			updateicon()
 		panel_menu()
 
 

@@ -55,10 +55,10 @@
 	// hide the object if turf is intact
 	hide(var/intact)
 		invisibility = intact ? 101 : 0
-		update_icon()
+		updateicon()
 
 	// update the icon_state
-	proc/update_icon()
+	proc/updateicon()
 		var/state="navbeacon[open]"
 
 		if(invisibility)
@@ -109,7 +109,7 @@
 
 			user.visible_message("[user] [open ? "opens" : "closes"] the beacon's cover.", "You [open ? "open" : "close"] the beacon's cover.")
 
-			update_icon()
+			updateicon()
 
 		else if (istype(I, /obj/item/weapon/card/id))
 			if(open)

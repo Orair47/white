@@ -2,7 +2,7 @@
 
 Alfie's magic closet, which saves items for a next round
 
-/obj/structure/closet/portal/proc/activate()
+/obj/closet/portal/proc/activate()
 	src.locked=0
 	processing_others.Add(src)
 	src.icon_opened = "portalopen"
@@ -17,7 +17,7 @@ Alfie's magic closet, which saves items for a next round
 
 
 
-/obj/structure/closet/portal/proc/deactivate()
+/obj/closet/portal/proc/deactivate()
 	src.locked=1
 	processing_others.Remove(src)
 	src.icon_opened = "open"
@@ -31,7 +31,7 @@ Alfie's magic closet, which saves items for a next round
 		src.close()
 
 
-/obj/structure/closet/portal/proc/process()
+/obj/closet/portal/proc/process()
 	for(var/obj/O in src.loc)
 		if(O!=src)
 			O.loc = target
@@ -40,7 +40,7 @@ Alfie's magic closet, which saves items for a next round
 		M<<"You step through the frame of the closet."
 
 
-/obj/structure/closet/portal/open(var/s=0)
+/obj/closet/portal/open(var/s=0)
 	if(s)
 		return ..()
 	if(!locked)
@@ -55,7 +55,7 @@ Alfie's magic closet, which saves items for a next round
 
 	return ..()
 
-/obj/structure/closet/portal/close(var/s=0)
+/obj/closet/portal/close(var/s=0)
 	if(s)
 		return ..()
 	if(!locked)
@@ -70,7 +70,7 @@ Alfie's magic closet, which saves items for a next round
 	return ..()
 
 
-/obj/structure/closet/portal/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/closet/portal/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(findtext(/obj/item/weapon/card/id,W.type))
 		if(src.check_access(W))
 			if(locked)
@@ -82,15 +82,15 @@ Alfie's magic closet, which saves items for a next round
 	else
 		..()
 
-/obj/structure/closet/portal/proc/LinkUp()
-	for(var/obj/structure/closet/portal/p in world)
+/obj/closet/portal/proc/LinkUp()
+	for(var/obj/closet/portal/p in world)
 		if(p!=src && p.id == src.id)
 			src.link=p
 	for(var/obj/landmark/ptarget/p in world)
 		if(p.t_id == src.t_id)
 			src.target=p.loc
 
-/obj/structure/closet/portal/New()
+/obj/closet/portal/New()
 	spawn(1)
 		LinkUp()
 */

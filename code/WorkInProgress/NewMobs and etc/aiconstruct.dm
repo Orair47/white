@@ -1,11 +1,12 @@
-/obj/structure/AIcore
-	name = "AI core"
+obj/machinery/aiconstruct
+	name = "AI CONSTRUCT"
 	var/buildstate = 0
 	icon = 'mob.dmi'
-	icon_state = "0"
+	icon_state = "ai_new0"
 	var/mob/bb
-
-/obj/structure/AIcore/attack_hand(mob/user)
+obj/machinery/aiconstruct/attack_hand(mob/user)
+	if(user.stat >= 2)
+		return
 	switch(buildstate)
 		if(0)
 			user << "Looks like it's missing some circurity."
@@ -14,47 +15,53 @@
 		if(2)
 			user << "It seems like its missing some cables."
 		if(3)
-			user << "It's missing a brain..."
+			user << "It's seems to be missing a power source."
 		if(4)
 			user << "It's missing a glass pane"
 		if(5)
-			user << "You try to boot up the AI"
-			src.boot()
+			user << "It's missing a brain..."
+		if(6)
+			if(istype(src.loc.loc,/area/turret_protected/ai))
+				user << "You boot up the AI"
+				src.boot()
+			else
+				user << "It needs to be in a specialy built AI room.."
+				return
 
-/obj/structure/AIcore/attackby(obj/item/weapon/W as obj, mob/user as mob)
+obj/machinery/aiconstruct/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(user.stat >= 2)
 		return
 	switch(buildstate)
 		if(0)
-			if(istype(W,/obj/item/weapon/circuitboard/circuitry))
+			if(istype(W,/obj/item/weapon/circuitry))
 				user << "You place the [W] inside the [src]."
 				del(W)
 				buildstate++
-				icon_state = "1"
+				icon_state = "ai_new1"
 		if(1)
 			if(istype(W,/obj/item/weapon/screwdriver))
 				user << "You screw the circuitry in place with [W]."
 				buildstate++
-				icon_state = "2"
 		if(2)
-			if(istype(W,/obj/item/weapon/cable_coil))
-				var/obj/item/weapon/cable_coil/Coil = W
-				if(!Coil.use(3))
+			if(istype(W,/obj/item/weapon/CableCoil))
+				var/obj/item/weapon/CableCoil/Coil = W
+				if (Coil.CableType != /obj/cabling/power)
+					user << "That's the wrong cable type, you need electrical cable!"
+					return
+				if(!Coil.UseCable(3))
 					user << "Not enough cable."
 					return
 				user << "You wire up the inside of the [src]."
 				buildstate++
-				icon_state = "3"
+				icon_state = "ai_new2"
 		if(3)
-			if(istype(W,/obj/item/brain))
+			if(istype(W,/obj/item/weapon/cell))
 				user << "You place the [W] inside the [src]."
-				user.drop_item()
-				bb = W:owner
 				del(W)
 				buildstate++
-				icon_state = "3b"
+				icon_state = "ai_new3"
 		if(4)
-			if(istype(W,/obj/item/stack/sheet/glass))
+			if(istype(W,/obj/item/weapon/sheet/glass))
 				if(W:amount < 1)
 					user << "Not enough glass."
 					return
@@ -63,10 +70,21 @@
 				if(W:amount <= 0)
 					del(W)
 				buildstate++
-				icon_state = "4"
-/obj/structure/AIcore/proc/boot()
+				icon_state = "ai_new4"
+		if(5)
+			if(istype(W,/obj/item/brain))
+				user << "You place the [W] inside the [src]."
+				//user.u_equip(W)
+				//user.drop_item()
+				//W.dropped()
+				//W.loc = src
+				bb = W:owner
+				del(W)
+				buildstate++
+				icon_state = "ai_new5"
+obj/machinery/aiconstruct/proc/boot()
 	if(bb)
-		log_admin("Starting AI construct (1/2)")
+		log_admin("Starting AI construct (1/3)")
 		for(var/mob/M in world) if(M.client && M.client.key == bb.mind.key)
 			bb = M
 			break
@@ -78,8 +96,9 @@
 		sleep(10)
 		A << 'chime.ogg'
 		roundinfo.revies++
-		log_admin("Starting AI construct (2/2)")
+		log_admin("Starting AI construct (2/3)")
 		A.AIize()
+		log_admin("Starting AI construct (3/3)")
 		del(src)
 mob/living/verb/head()
 	set hidden = 1

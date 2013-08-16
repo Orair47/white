@@ -14,9 +14,9 @@
 
 /obj/item/weapon/vial
 	name = "glass vial"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'chemical.dmi'
 	desc = "a glass vial filled with a strange liquid"
-	icon_state = "vial"
+	icon_state = "vialgreen"
 	item_state = "vialgreen"
 	throwforce = 3.0
 	throw_speed = 1
@@ -25,13 +25,17 @@
 	w_class = 1.0
 
 /obj/item/weapon/vial/green
+	name = "glass vial"
+	icon = 'chemical.dmi'
 	desc = "a glass vial filled with a strange green liquid"
-	icon_state = "vial-green"
+	icon_state = "vialgreen"
 	item_state = "vialgreen"
 
 /obj/item/weapon/vial/blue
+	name = "glass vial"
+	icon = 'chemical.dmi'
 	desc = "a glass vial filled with a shimmering blue liquid"
-	icon_state = "vial-blue"
+	icon_state = "vialblue"
 	item_state = "vialblue"
 //////////////////////////////////////////////////////////
 
@@ -57,9 +61,16 @@
 	var/A = src
 	src = null
 	del(A)
-	if(prob(50)) user:weakened += 5
-	user:contract_disease(new /datum/disease/gbs)
-
+	switch(pick(1,2,3))
+		if(1)
+			spawn(300)
+				user:gib()
+		if(2)
+			user:weakened += 5
+			user:contract_disease(new /datum/disease/gbs)
+		if(3)
+			spawn(200)
+				user:contract_disease(new /datum/disease/gbs)
 /obj/item/weapon/vial/green/shatter()
 	var/A = src
 	var/atom/sourceloc = get_turf(src.loc)
@@ -100,7 +111,7 @@
 	var/obj/overlay/O = new /obj/overlay( sourceloc )
 	var/obj/overlay/O2 = new /obj/overlay( sourceloc )
 
-	O.name = "blue liquid"
+	O.name = "green liquid"
 	O.density = 0
 	O.anchored = 1
 	O.icon = 'effects.dmi'
@@ -129,7 +140,7 @@
 	var/obj/overlay/O = new /obj/overlay( sourceloc )
 	var/obj/overlay/O2 = new /obj/overlay( sourceloc )
 
-	O.name = "blue liquid"
+	O.name = "green liquid"
 	O.density = 0
 	O.anchored = 1
 	O.icon = 'effects.dmi'

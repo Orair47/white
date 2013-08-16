@@ -83,9 +83,9 @@
 		playsound(src.loc, 'Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			user << "\blue The broken glass falls out."
-			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
+			var/obj/computerframe/A = new /obj/computerframe( src.loc )
 			new /obj/item/weapon/shard( src.loc )
-			var/obj/item/weapon/circuitboard/computer/cloning/M = new /obj/item/weapon/circuitboard/computer/cloning( A )
+			var/obj/item/weapon/circuitboard/cloning/M = new /obj/item/weapon/circuitboard/cloning( A )
 			for (var/obj/C in src)
 				C.loc = src.loc
 			//M.records = src.records
@@ -703,12 +703,12 @@
 /*
  *	Diskette Box
  */
-/obj/item/weapon/storage/box/disk/genetics
+/obj/item/weapon/storage/diskboxgenetics
 	name = "Genetics Diskette Box"
 	icon_state = "disk_kit"
 	item_state = "syringe_kit"
 
-/obj/item/weapon/storage/box/disk/genetics/New()
+/obj/item/weapon/storage/diskboxgenetics/New()
 	..()
 	new /obj/item/weapon/disk/data/genetics(src)
 	new /obj/item/weapon/disk/data/genetics(src)

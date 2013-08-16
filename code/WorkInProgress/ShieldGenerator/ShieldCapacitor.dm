@@ -22,7 +22,7 @@
 
 	if(stat & BROKEN)
 		charge = 0
-		update_icon()
+		updateicon()
 		return
 
 	if(shields_enabled)
@@ -35,12 +35,12 @@
 	else if(charge >= 1 && !on)
 		on = 1
 		ShieldNetwork.capacitators += 1
-	update_icon()
+	updateicon()
 	return
 
 
 ///Update the icon
-/obj/machinery/shielding/capacitor/proc/update_icon()
+/obj/machinery/shielding/capacitor/proc/updateicon()
 	clearoverlays()
 	icon_state = "cap[stat & (NOPOWER|BROKEN) ? "-p" : ""]"
 	addoverlay(image('shieldgen.dmi', "c[round(charge * 5 / maxcharge)]"))

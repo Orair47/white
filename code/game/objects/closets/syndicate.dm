@@ -1,4 +1,4 @@
-/obj/structure/closet/syndicate/personal/New()
+/obj/closet/syndicate/personal/New()
 	..()
 	sleep(2)
 	new /obj/item/weapon/tank/jetpack/syndie(src)
@@ -10,3 +10,4 @@
 	new /obj/item/weapon/cell(src)
 	new /obj/item/weapon/card/id/syndicate(src)
 	new /obj/item/device/multitool(src)
+

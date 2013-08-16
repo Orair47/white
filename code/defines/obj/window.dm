@@ -1,4 +1,4 @@
-/obj/structure/window
+/obj/window
 	name = "window"
 	icon = 'structures.dmi'
 	icon_state = "window"
@@ -18,32 +18,32 @@
 
 // Basic
 
-/obj/structure/window/basic/north
+/obj/window/basic/north
 	dir = NORTH
 
-/obj/structure/window/basic/east
+/obj/window/basic/east
 	dir = EAST
 
-/obj/structure/window/basic/west
+/obj/window/basic/west
 	dir = WEST
 
-/obj/structure/window/basic/south
+/obj/window/basic/south
 	dir = SOUTH
 
-/obj/structure/window/basic/northwest
+/obj/window/basic/northwest
 	dir = NORTHWEST
 
-/obj/structure/window/basic/northeast
+/obj/window/basic/northeast
 	dir = NORTHEAST
 
-/obj/structure/window/basic/southwest
+/obj/window/basic/southwest
 	dir = SOUTHWEST
 
-/obj/structure/window/basic/southeast
+/obj/window/basic/southeast
 	dir = SOUTHEAST
 
 // Pod
-/obj/structure/window_pod
+/obj/window_pod
 	name = "window"
 	icon = 'shuttle.dmi'
 	icon_state = "window1"
@@ -52,72 +52,72 @@
 	anchored = 1
 	density = 1
 
-/obj/structure/window_pod/attack_hand()
+/obj/window_pod/attack_hand()
 	return
 
-/obj/structure/window_pod/attack_paw()
+/obj/window_pod/attack_paw()
 	return
 
-/obj/structure/window_pod/blob_act()
+/obj/window_pod/blob_act()
 	return
 
-/obj/structure/window_pod/bullet_act(flag)
+/obj/window_pod/bullet_act(flag)
 	return
 
-/obj/structure/window_pod/ex_act(severity)
+/obj/window_pod/ex_act(severity)
 	return
 
-/obj/structure/window_pod/hitby(AM as mob|obj)
+/obj/window_pod/hitby(AM as mob|obj)
 	..()
 	for(var/mob/O in viewers(src, null))
 		O.show_message(text("\red <B>[src] was hit by [AM].</B>"), 1)
 	playsound(src.loc, 'Glasshit.ogg', 100, 1)
 	return
 
-/obj/structure/window/meteorhit()
+/obj/window/meteorhit()
 	return
 
-/obj/structure/window_pod/CanPass(atom/movable/mover, turf/source, height=0, air_group=0)
+/obj/window_pod/CanPass(atom/movable/mover, turf/source, height=0, air_group=0)
 	if(istype(mover, /obj/beam))
 		return 1
 
 	return 0
 
-/obj/structure/window_pod/Move()
+/obj/window_pod/Move()
 	return 0
 
 // Reinforced
 
-/obj/structure/window/reinforced
+/obj/window/reinforced
 	reinf = 1
 	explosionstrength = 1
 	icon_state = "rwindow"
 	name = "reinforced window"
 
-/obj/structure/window/reinforced/north
+/obj/window/reinforced/north
 	dir = NORTH
 
-/obj/structure/window/reinforced/east
+/obj/window/reinforced/east
 	dir = EAST
 
-/obj/structure/window/reinforced/west
+/obj/window/reinforced/west
 	dir = WEST
 
-/obj/structure/window/reinforced/south
+/obj/window/reinforced/south
 	dir = SOUTH
 
-/obj/structure/window/reinforced/northwest
+/obj/window/reinforced/northwest
 	dir = NORTHWEST
 
-/obj/structure/window/reinforced/northeast
+/obj/window/reinforced/northeast
 	dir = NORTHEAST
 
-/obj/structure/window/reinforced/southwest
+/obj/window/reinforced/southwest
 	dir = SOUTHWEST
 
-/obj/structure/window/reinforced/southeast
+/obj/window/reinforced/southeast
 	dir = SOUTHEAST
-/*/obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/*/obj/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	var/pressure = air.return_pressure() //DERP22
 	if(pressure >= 200)
 		del src

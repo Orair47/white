@@ -35,7 +35,7 @@
 	Capacitor = locate() in get_step(src, WEST)
 	if(!Capacitor)
 		stat |= BROKEN
-		update_icon()
+		UpdateIcon()
 	else
 		Capacitor.generator = src
 		ShieldNetwork.capacitators += 1
@@ -158,10 +158,10 @@ Manual Mode Generation Rate:      <a href="?src=\ref[src]&man=1">M</a> <a href="
 		return
 	if(!Capacitor)
 		stat |= BROKEN
-		update_icon()
+		UpdateIcon()
 		return
 	if(Capacitor.maxcharge == Capacitor.charge || Capacitor.charge * 100 == AutoTargetChargeLevel && OperatingMode == 3)
-		update_icon()
+		UpdateIcon()
 		return
 	switch(OperatingMode)
 		if(1)
@@ -192,12 +192,12 @@ Manual Mode Generation Rate:      <a href="?src=\ref[src]&man=1">M</a> <a href="
 		Capacitor.charge += round(ConversionRate ** 2.15)
 		Capacitor.charge = min(Capacitor.charge, Capacitor.maxcharge)
 	PreviousConversionRate = ConversionRate
-	update_icon()
+	UpdateIcon()
 	updateUsrDialog()
 
 /obj/machinery/shielding/energyconverter/power_change()
 	..()
-	update_icon()
+	UpdateIcon()
 
 /obj/machinery/shielding/energyconverter/proc/produce_energy(var/amount)
 	//Get batteries
@@ -211,7 +211,7 @@ Manual Mode Generation Rate:      <a href="?src=\ref[src]&man=1">M</a> <a href="
 	//and return any we couldn't add to the shield set
 	return amount - maxin
 
-/obj/machinery/shielding/energyconverter/proc/update_icon()
+/obj/machinery/shielding/energyconverter/proc/UpdateIcon()
 	clearoverlays()
 	if (stat)
 		icon_state = "econ-p"

@@ -3,7 +3,7 @@
 	icon = 'computer.dmi'
 	density = 1
 	anchored = 1.0
-	var/obj/item/weapon/circuitboard/computer/circuit = null //if circuit==null, computer can't disassemble
+	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassemble
 	var/brightnessred = 2
 	var/brightnessgreen = 2
 	var/brightnessblue = 2
@@ -20,7 +20,7 @@
 	anchored = 1.0
 	icon = 'computer.dmi'
 	icon_state = "operating"
-	circuit = "/obj/item/weapon/circuitboard/computer/operating"
+	circuit = "/obj/item/weapon/circuitboard/operating"
 
 	var/mob/living/carbon/human/victim = null
 
@@ -35,7 +35,7 @@
 	name = "arcade machine"
 	icon = 'computer.dmi'
 	icon_state = "arcade"
-	circuit = "/obj/item/weapon/circuitboard/computer/arcade"
+	circuit = "/obj/item/weapon/circuitboard/arcade"
 	var/enemy_name = "Space Villain"
 	var/temp = "Winners Don't Use Spacedrugs" //Temporary message, for attack messages, etc
 	var/player_hp = 30 //Player health/attack points
@@ -53,7 +53,7 @@
 /obj/machinery/computer/aiupload
 	name = "AI Upload"
 	icon_state = "aiupload"
-	circuit = "/obj/item/weapon/circuitboard/computer/aiupload"
+	circuit = "/obj/item/weapon/circuitboard/aiupload"
 	brightnessred = 0
 	brightnessgreen = 2
 	brightnessblue = 0
@@ -64,13 +64,23 @@
 /obj/machinery/computer/atmosphere/alerts
 	name = "Alert Computer"
 	icon_state = "atmos"
-	circuit = "/obj/item/weapon/circuitboard/computer/atmospherealerts"
+	circuit = "/obj/item/weapon/circuitboard/atmospherealerts"
 	var/alarms = list("Fire"=list(), "Atmosphere"=list())
+
+/obj/machinery/computer/atmosphere/mixer
+	//Controller for a single gas mixer.
+	icon_state = "mixer"
+	name = "Gas Mixer Control Computer"
+	var/frequency = "1437"
+	var/list/rates = list(50, 50)
+	var/obj/machinery/atmospherics/mixer/mixer = null
+	var/targettag = ""
+
 
 /obj/machinery/computer/general_alert
 	name = "General Alert Computer"
 	icon_state = "alert:0"
-	circuit = "/obj/item/weapon/circuitboard/computer/general_alert"
+	circuit = "/obj/item/weapon/circuitboard/general_alert"
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
 	var/receive_frequency = "1437"
@@ -88,7 +98,7 @@
 /obj/machinery/computer/card
 	name = "Identification Computer"
 	icon_state = "id"
-	circuit = "/obj/item/weapon/circuitboard/computer/card"
+	circuit = "/obj/item/weapon/circuitboard/card"
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
 	var/authenticated = 0.0
@@ -103,7 +113,7 @@
 	name = "Communications Console"
 	icon_state = "comm"
 	req_access = list(access_heads)
-	circuit = "/obj/item/weapon/circuitboard/computer/communications"
+	circuit = "/obj/item/weapon/circuitboard/communications"
 	brightnessred = 0
 	brightnessgreen = 2
 	brightnessblue = 0
@@ -168,7 +178,7 @@
 	name = "Medical Records"
 	icon_state = "medical"
 	req_access = list(access_medical)
-	circuit = "/obj/item/weapon/circuitboard/computer/med_data"
+	circuit = "/obj/item/weapon/circuitboard/med_data"
 	brightnessred = 0
 	brightnessgreen = 2
 	brightnessblue = 0
@@ -212,7 +222,7 @@
 	name = "Security Records"
 	icon_state = "security"
 	req_access = list(access_security)
-	circuit = "/obj/item/weapon/circuitboard/computer/secure_data"
+	circuit = "/obj/item/weapon/circuitboard/secure_data"
 	brightnessred = 2
 	brightnessgreen = 0
 	brightnessblue = 0
@@ -235,7 +245,7 @@
 /obj/machinery/computer/security
 	name = "Security Cameras"
 	icon_state = "seccam"
-	circuit = "/obj/item/weapon/circuitboard/computer/security"
+	circuit = "/obj/item/weapon/circuitboard/security"
 	var/obj/machinery/camera/current = null
 	var/last_pic = 1.0
 	var/network = "Luna"
@@ -262,7 +272,7 @@
 /obj/machinery/computer/teleporter
 	name = "Teleporter"
 	icon_state = "teleport"
-	circuit = "/obj/item/weapon/circuitboard/computer/teleporter"
+	circuit = "/obj/item/weapon/circuitboard/teleporter"
 	var/obj/item/locked = null
 	var/id = null
 
@@ -276,7 +286,7 @@
 	icon = 'computer.dmi'
 	icon_state = "robotics"
 	req_access = list(access_captain)
-	circuit = "/obj/item/weapon/circuitboard/computer/robotics"
+	circuit = "/obj/item/weapon/circuitboard/robotics"
 	brightnessred = 0
 	brightnessgreen = 2
 	brightnessblue = 0

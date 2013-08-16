@@ -8,7 +8,7 @@
 	name = "weeds"
 	anchored = 1
 	var/dead = 0
-	var/list/allowed = list(/obj/structure/closet,/obj/structure/table,/obj/machinery/computer,/obj/machinery/disposal)
+	var/list/allowed = list(/obj/closet,/obj/table,/obj/machinery/computer,/obj/machinery/disposal)
 	var/spreadlimit = 10
 
 /obj/item/alien/weeds/New()
@@ -34,9 +34,9 @@
 */
 	dead = 1	//No real reason for a weed to spread more than once.
 	Life()
-	update_icon(0)
+	updateicon(0)
 
-/obj/item/alien/weeds/proc/update_icon(var/spread = 1)
+/obj/item/alien/weeds/proc/updateicon(var/spread = 1)
 	var/turf/T = src.loc
 	var/obj/item/alien/weeds/north = locate() in T.north
 	var/obj/item/alien/weeds/west = locate() in T.west
@@ -48,22 +48,22 @@
 	if(!north)
 		dir += "north"
 	else if(spread)
-		north.update_icon(0)
+		north.updateicon(0)
 
 	if(!south)
 		dir += "south"
 	else if(spread)
-		south.update_icon(0)
+		south.updateicon(0)
 
 	if(!west)
 		dir += "west"
 	else if(spread)
-		west.update_icon(0)
+		west.updateicon(0)
 
 	if(!east)
 		dir += "east"
 	else if(spread)
-		east.update_icon(0)
+		east.updateicon(0)
 
 	if(!dir)
 		icon_state = "creep_center"
@@ -75,7 +75,7 @@
 /obj/item/alien/weeds/proc/Life()
 	if (spreadlimit <= 0)
 		return
-	src.update_icon(0)
+	src.updateicon(0)
 	var/turf/U = src.loc
 	if (istype(U, /turf/space))
 		del(src)
@@ -116,15 +116,15 @@
 				if(T.Enter(B) && !(locate(/obj/alien/weeds) in T))
 					B.loc = T
 					//B.Life()
-					B.update_icon(1)
+					B.updateicon(1)
 					continue
 				else
 					del(B)
-		if(locate(/obj/structure/closet) in T || locate(/obj/structure/table) in T || locate(/obj/machinery/computer) in T || locate(/obj/machinery/disposal) in T)
+		if(locate(/obj/closet) in T || locate(/obj/table) in T || locate(/obj/machinery/computer) in T || locate(/obj/machinery/disposal) in T)
 			var/obj/item/alien/weeds/B = new(T)
 			B.spreadlimit = src.spreadlimit - 1
 			//B.Life()
-			B.update_icon(1)
+			B.updateicon(1)
 			continue
 		if(!locate(/obj/item/alien/weeds) in T)
 			var/obj/item/alien/weeds/B = new(src.loc)
@@ -133,7 +133,7 @@
 			if(T.Enter(B))
 				B.loc = T
 				//B.Life()
-				B.update_icon(1)
+				B.updateicon(1)
 				continue
 			else
 				del(B)
@@ -161,13 +161,13 @@
 			if(T.Enter(B,src) && !(locate(/obj/alien/weeds) in T))
 				B.loc = T
 				B.Life()
-				B.update_icon()
+				B.updateicon()
 				sleep(100)
 				continue
 			else
 				del(B)
 
-		else if(locate(/obj/structure/grille) in T || /obj/structure/window/ in T)
+		else if(locate(/obj/grille) in T || /obj/window/ in T)
 			var/obj/alien/weeds/B = new /obj/alien/weeds(U)
 			B.icon_state = pick("")
 			if(T.Enter(B,src) && !(locate(/obj/alien/weeds) in T))
@@ -175,7 +175,7 @@
 				spawn(80)
 					if(B)
 						B.Life()
-						B.update_icon()
+						B.updateicon()
 						continue
 			else
 				del(B)
@@ -187,13 +187,13 @@
 			spawn(80)
 			if(B)
 				B.Life()
-				B.update_icon()
+				B.updateicon()
 				continue
 			else
 				del(B)
 						/*		if(T.Enter(B,src) && !(locate(/obj/alien/weeds) in T))
 			B.loc = T
-			update_icon()
+			updateicon()
 			spawn(80)
 				if(B)
 					B.Life()

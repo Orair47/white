@@ -265,7 +265,7 @@
 				M.show_message("[user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
 			if(on && (W.flags & CONDUCT))
 				if(!user.mutations & 2)
-					Electrocute(user, 50, null, 20000)
+					src.Electrocute(user, 50, null, 20000)
 			broken()
 
 
@@ -276,11 +276,11 @@
 	else if(status == LIGHT_EMPTY)
 		user << "You stick \the [W.name] into the light socket!"
 		if(has_power() && (W.flags & CONDUCT))
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
 			if(!user.mutations & 2)
-				Electrocute(user, 75, null, 20000)
+				src.Electrocute(user, 75, null, 20000)
 
 
 // returns whether this light has power
@@ -361,7 +361,7 @@
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
 		playsound(src.loc, 'Glasshit.ogg', 75, 1)
 	if(on)
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
 	status = LIGHT_BROKEN
@@ -544,6 +544,7 @@
 		user << "You inject the solution into the [src]."
 
 		if(S.reagents.has_reagent("plasma", 5))
+
 			rigged = 1
 
 		S.reagents.clear_reagents()
@@ -572,33 +573,25 @@
 
 // a box of replacement light items
 
-/obj/item/weapon/storage/box/light
+/obj/item/weapon/storage/lightbox
 	name = "replacement lights"
 	icon = 'storage.dmi'
-	icon_state = "lightmixed"
+	icon_state = "light_tube"
 	item_state = "syringe_kit"
 
-/obj/item/weapon/storage/box/light/tubes
+/obj/item/weapon/storage/lightbox/tubes
 	name = "Replacement tubes"
+	icon = 'storage.dmi'
 	icon_state = "light_tube"
+	item_state = "syringe_kit"
 
-/obj/item/weapon/storage/box/light/bulb
+/obj/item/weapon/storage/lightbox/bulb
 	name = "Replacement bulbs"
 	icon = 'storage.dmi'
 	icon_state = "light_bulb"
+	item_state = "syringe_kit"
 
-/obj/item/weapon/storage/box/light/mixed/New()
-	..()
-	new /obj/item/weapon/light/bulb(src)
-	new /obj/item/weapon/light/bulb(src)
-	new /obj/item/weapon/light/bulb(src)
-	new /obj/item/weapon/light/tube(src)
-	new /obj/item/weapon/light/tube(src)
-	new /obj/item/weapon/light/tube(src)
-	new /obj/item/weapon/light/tube(src)
-
-
-/obj/item/weapon/storage/box/light/tubes/New()
+/obj/item/weapon/storage/lightbox/tubes/New()
 	..()
 	new /obj/item/weapon/light/tube(src)
 	new /obj/item/weapon/light/tube(src)
@@ -606,15 +599,13 @@
 	new /obj/item/weapon/light/tube(src)
 	new /obj/item/weapon/light/tube(src)
 	new /obj/item/weapon/light/tube(src)
-	new /obj/item/weapon/light/tube(src)
 
-/obj/item/weapon/storage/box/light/bulb/New()
+/obj/item/weapon/storage/lightbox/bulb/New()
 	..()
 	new /obj/item/weapon/light/bulb(src)
 	new /obj/item/weapon/light/bulb(src)
 	new /obj/item/weapon/light/bulb(src)
-	new /obj/item/weapon/light/bulb(src)
-	new /obj/item/weapon/light/bulb(src)
-	new /obj/item/weapon/light/bulb(src)
-	new /obj/item/weapon/light/bulb(src)
 
+	new /obj/item/weapon/light/bulb(src)
+	new /obj/item/weapon/light/bulb(src)
+	new /obj/item/weapon/light/bulb(src)
